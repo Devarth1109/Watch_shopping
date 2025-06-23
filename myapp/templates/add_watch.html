@@ -1,0 +1,82 @@
+{% extends 'seller_header.html' %}
+{% load static %}
+{% block content %}
+      <!-- background bg start -->
+      <div class="background_bg">
+        <!-- contact section start -->
+        <div class="contact_section layout_padding">
+          <div class="container">
+            <h1 class="watchs_taital">Add<br>Watchs</h1>
+          </div>
+           <div class="contact_section_2">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="mail_section_1">
+                        {% if msg %}
+                            <p style="color: green;">{{msg}}</p>
+                        {% elif msg1 %}
+                            <p style="color: red;">{{msg1}}</p>
+                        {% else %} 
+                            <p style="color: red;"></p>
+                        {% endif %}
+                        <form action="{% url 'add_watch' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="watchtype">Watch Type</label>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Select Watch Type
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <div class="dropdown-item" data-value="wall_clock">Wall Clock</div>
+                                        <div class="dropdown-item" data-value="smart_watch">Smart Watch</div>
+                                        <div class="dropdown-item" data-value="smart_band">Smart Band</div>
+                                        <div class="dropdown-item" data-value="classical_watch">Classic Watch</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="watchtype" id="watchtype" required>
+                            </div>
+                            <input type="file" class="mail_text" placeholder="Watch Image" name="w_image" required>
+                            <input type="text" class= "mail_text" placeholder="Watch Brans" name="w_brand" required=required>
+                            <input type="text" class= "mail_text" placeholder="Watch Model" name="w_model" required=required>
+                            <input type="text" class= "mail_text" placeholder="Watch Price" name="w_price" required=required>
+                            <textarea type="text" class="mail_text" placeholder="Watch Features" name="w_features" required=required></textarea>
+                            <div class="send_bt">
+                                <input type="submit" value="Add" class="btrn btn-danger py-3 px-5">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6 padding_right_0">
+                  <div class="map_section"><img src="{% static 'images/map-img.png' %}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- contact section end -->
+      </div>
+      <!-- background bg end -->
+
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+      <!-- Custom JavaScript for Dropdown -->
+      <script>
+          document.addEventListener('DOMContentLoaded', function () {
+              const dropdownItems = document.querySelectorAll('.dropdown-item');
+              const dropdownButton = document.getElementById('dropdownMenuButton');
+              const watchtypeInput = document.getElementById('watchtype');
+    
+              dropdownItems.forEach(item => {
+                  item.addEventListener('click', function () {
+                      const value = this.getAttribute('data-value');
+                      watchtypeInput.value = value;  // Set the value of the hidden input
+                      dropdownButton.textContent = this.textContent; // Change button text
+                  });
+              });
+          });
+      </script>
+{% endblock %}

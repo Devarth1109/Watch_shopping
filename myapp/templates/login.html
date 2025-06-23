@@ -1,0 +1,57 @@
+{% extends 'header.html' %}
+{% load static %}
+{% load socialaccount %}
+{% block content %}
+      <!-- background bg start -->
+      <div class="background_bg">
+        <!-- contact section start -->
+        <div class="contact_section layout_padding">
+          <div class="container">
+            <h1 class="watchs_taital">Log IN<br>Here</h1>
+          </div>
+           <div class="contact_section_2">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="mail_section_1">
+                        {% if msg %}
+                            <p style="color: green;">{{msg}}</p>
+                        {% elif msg1 %}
+                            <p style="color: red;">{{msg1}}</p>
+                        {% else %}
+                            <p style="color: red;"></p>
+                        {% endif %}
+                        <form action="{% url 'login' %}" method="post">
+                            {% csrf_token %}
+                            <input type="email" class= "mail_text" placeholder="Email" name="email", required=required>
+                            <input type="password" class= "mail_text" placeholder="Password" name="pswd">
+                            <div class="send_bt">
+                                <input type="submit" value="Login" class="btrn btn-danger py-3 px-5">
+                            </div>
+                            <div class="form-group">
+                                <p style="color: white;">You Don't Have An Account ? <a style="color: blue;" href="{% url 'signup' %}">SignUp Here</a></p>
+                                <p style="color: white;">Forgot Password ? <a style="color: blue;" href="{% url 'fpswd' %}">Forgot Password</a></p>
+                            </div>
+                            <div class="google-login">
+                              <a href="{% provider_login_url 'google' %}?next=/" class="btn btn-primary">Log in with Google</a>
+                            </div>
+                            {% if request.session.email %}
+                            <p style="color: pink;">You are signed in as {{user.email}}</p>
+                           <a href="{% url 'account_logout' %}" class="btn btn-danger">Logout</a>
+                            {% endif %}
+                        </form>
+                        
+                        
+                    </div>
+                </div>
+                <div class="col-md-6 padding_right_0">
+                  <div class="map_section"><img src="{% static 'images/map-img.png' %}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- contact section end -->
+      </div>
+      <!-- background bg end -->
+{% endblock %}

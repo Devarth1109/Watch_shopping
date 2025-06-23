@@ -1,0 +1,47 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+      <!-- background bg start -->
+      <div class="background_bg">
+        <!-- contact section start -->
+        <div class="contact_section layout_padding">
+          <div class="container">
+            <h1 class="watchs_taital">Verify<br>OTP</h1>
+          </div>
+           <div class="contact_section_2">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="mail_section_1">
+                        {% if msg %}
+                            <p style="color: green;">{{msg}}</p>
+                        {% elif msg1 %}
+                            <p style="color: red;">{{msg1}}</p>
+                        {% else %}
+                            <p style="color: red;"></p>
+                        {% endif %}
+                        <form action="{% url 'verify_otp' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="email", value="{{email}}" />
+                            <input type="hidden" name="uotp", value="{{otp}}" />
+
+                            <div class="form-group">
+                                <input type="text" name="otp" class="mail_text" placeholder="OTP">
+                            </div>
+                            <div class="send_bt">
+                                <input type="submit" value="Verify OTP" class="btrn btn-danger py-3 px-5">
+                            </div>
+                        </form> 
+                    </div>
+                </div>
+                <div class="col-md-6 padding_right_0">
+                  <div class="map_section"><img src="{% static 'images/map-img.png' %}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- contact section end -->
+      </div>
+      <!-- background bg end -->
+{% endblock %}

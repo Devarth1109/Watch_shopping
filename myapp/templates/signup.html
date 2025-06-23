@@ -1,0 +1,113 @@
+  {% extends 'header.html' %}
+  {% load static %}
+  {% block content %}
+  <!-- background bg start -->
+  <div class="background_bg">
+      <!-- contact section start -->
+      <div class="contact_section layout_padding">
+          <div class="container">
+              <h1 class="watchs_taital">Sign Up<br>Here</h1>
+          </div>
+          <div class="contact_section_2">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="mail_section_1">
+                              {% if msg %}
+                                  <p style="color: green;">{{msg}}</p>
+                              {% elif msg1 %}
+                                  <p style="color: red;">{{msg1}}</p>
+                              {% else %}
+                                  <p style="color: red;"></p>
+                              {% endif %}
+                              <form action="{% url 'signup' %}" method="post">
+                                  {% csrf_token %}
+                                  
+                                  <!-- Custom Dropdown Menu -->
+                                  <div class="form-group">
+                                      <label for="usertype">User Type</label>
+                                      <div class="dropdown">
+                                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                              Select User Type
+                                          </button>
+                                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                              <div class="dropdown-item" data-value="customer">Customer</div>
+                                              <div class="dropdown-item" data-value="seller">Seller</div>
+                                          </div>
+                                      </div>
+                                      <input type="hidden" name="usertype" id="usertype" required>
+                                  </div>
+                                  
+                                  <input type="text" class="mail_text" placeholder="First Name" name="fname" required>
+                                  <input type="text" class="mail_text" placeholder="Last Name" name="lname" required>
+                                  <input type="email" class="mail_text" id="email_validation" placeholder="Email" name="email" data-validation-required-message="Please enter your email" required>
+                                  <span id="email_error" style="color:red;"></span>
+                                  <input type="password" class="mail_text" placeholder="Password" name="pswd" required>
+                                  <input type="password" class="mail_text" placeholder="Confirm Password" name="cpswd" required>
+                                  <div class="send_bt">
+                                      <input type="submit" value="SignUp" class="btrn btn-danger py-3 px-5">
+                                  </div>
+                                  <div class="form-group">
+                                      <p style="color: white;">Already Have An Account? <a style="color: blue;" href="{% url 'login' %}">LogIn Here</a></p>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                      <div class="col-md-6 padding_right_0">
+                          <div class="map_section"><img src="{% static 'images/map-img.png' %}"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- contact section end -->
+  </div>
+  <!-- background bg end -->
+
+  <!-- jQuery and Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Custom JavaScript for Dropdown -->
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const dropdownItems = document.querySelectorAll('.dropdown-item');
+          const dropdownButton = document.getElementById('dropdownMenuButton');
+          const usertypeInput = document.getElementById('usertype');
+
+          dropdownItems.forEach(item => {
+              item.addEventListener('click', function () {
+                  const value = this.getAttribute('data-value');
+                  usertypeInput.value = value;  // Set the value of the hidden input
+                  dropdownButton.textContent = this.textContent; // Change button text
+              });
+          });
+      });
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <script>
+          
+            $("#email_validation").change(function(){
+              var email=$(this).val();
+
+              $.ajax({
+                url: 'ajax/e_verify/',
+                data: {'email':email},
+                datatype: 'json',
+                success: function (data){
+                  if (data.is_taken) {
+                    document.getElementById("email_error").innerHTML="This Email ID is Already Exist";
+                  }
+                  else{
+                    document.getElementById("email_error").innerHTML="";
+                  }
+                }
+              });
+            });
+
+        </script>
+    
+  {% endblock %}

@@ -1,0 +1,29 @@
+<!-- view_cart.html -->
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<div class="background_bg">
+    <div class="watchs_section layout_padding">
+        <div class="container">
+            <h1 class="watchs_taital">Your Cart</h1>
+            <div class="watchs_section_2">
+                <div class="row">
+                    {% for item in cart_items %}
+                    <div class="col-md-6">
+                        <div class="image_1"><img src="{{ item.watch.w_image.url }}"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="uni_text">{{ item.watch.w_brand }} {{ item.watch.w_model }}</h4>
+                        <h3 class="uni_text">{{ item.watch.watchtype }}</h3>
+                        <p class="watchs_text">{{ item.watch.w_features }}</p>
+                        <h4 class="rate_text"><span style="color: #b60213;">$</span>{{ item.watch.w_price }}</h4>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <div class="read_bt1"><a href="{% url 'remove_from_cart' item.pk %}">Remove</a></div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
